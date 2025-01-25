@@ -41,7 +41,7 @@ struct conn
 {
 	struct conn *next;
 	SOCKET fd;
-	char buffer[4096];
+	char buffer[4097];
 	int head,tail;
 };
 
@@ -286,20 +286,30 @@ int main(int argc,char **argv)
 
 				if (FD_ISSET(c->fd,&fdr))
 				{
-					int k=sizeof(c->buffer)-c->head;
+					int k;
 					int off=c->head;
 
 					FD_CLR(c->fd,&fdr);
 
-					if (c->head >= c->tail)
+					if (c->head == c->tail)
 					{
-						k=sizeof(c->buffer)-c->head;
-
-						if (!c->tail) k--;
+						off=0;
+						k=sizeof(c->buffer)-1;
+						c->head=0;
+						c->tail=0;
 					}
 					else
 					{
-						k=c->tail-c->head-1;
+						if (c->head > c->tail)
+						{
+							k=sizeof(c->buffer)-c->head;
+
+							if (!c->tail) k--;
+						}
+						else
+						{
+							k=c->tail-c->head-1;
+						}
 					}
 
 #if defined(_M_IX86) && defined(_WIN32)

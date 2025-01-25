@@ -6,7 +6,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-Socket socket = new(SocketType.Stream, ProtocolType.Tcp);
+using Socket socket = new(SocketType.Stream, ProtocolType.Tcp);
 
 await socket.ConnectAsync(
     args.Length >= 1 ? args[0] : "localhost",

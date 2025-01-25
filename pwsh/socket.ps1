@@ -29,7 +29,7 @@ function Invoke-Socket
 				if ($ba.length -eq $len)
 				{
 					Write-Output -InputObject $ba -NoEnumerate
-					$ba = New-Object -TypeName 'System.Byte[]' -ArgumentList (,4096)
+					$ba = New-Object -TypeName 'System.Byte[]' -ArgumentList (,$ba.Length)
 				}
 				else
 				{
@@ -50,15 +50,12 @@ function Invoke-Socket
 	}
 	end
 	{
-		try
-		{
-			$send = [System.Net.Sockets.SocketShutdown]::Send
-			$socket.Shutdown($send)
-			Receive-Job -Job $job -Wait
-		}
-		finally
-		{
-			$socket.Dispose()
-		}
+		$send = [System.Net.Sockets.SocketShutdown]::Send
+		$socket.Shutdown($send)
+		Receive-Job -Job $job -Wait
+	}
+	clean
+	{
+		$socket.Dispose()
 	}
 }

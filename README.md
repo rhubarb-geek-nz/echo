@@ -27,4 +27,4 @@ $ gcc -I. echod.c -o echod -DHAVE_CONFIG_H -Wall -Werror
 
 # Client
 
-Socket clients for .NET and Java
+Socket clients for .NET, Java and PowerShell

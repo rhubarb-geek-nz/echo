@@ -1,0 +1,9 @@
+[Unit]
+Description=Echo Socket
+
+[Socket]
+ListenStream=7
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

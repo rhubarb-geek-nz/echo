@@ -32,3 +32,7 @@ Socket clients for .NET, Java and PowerShell
 ## Systemd
 
 Socket and service for systemd
+
+## Service
+
+Win32 service

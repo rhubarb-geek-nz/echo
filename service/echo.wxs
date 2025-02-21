@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="rhubarb-geek-nz/echo ($(env.PRODUCTARCH))" Language="1033" Version="$(env.PRODUCTVERSION)" Manufacturer="rhubarb-geek-nz" UpgradeCode="$(env.UPGRADECODE)">
+    <Package InstallerVersion="$(env.INSTALLERVERSION)" Compressed="yes" InstallScope="perMachine" Platform="$(env.PRODUCTARCH)" Description="Dual-Interface Hello World Component" Comments="https://github.com/rhubarb-geek-nz/echo" />
+    <MediaTemplate EmbedCab="yes" />
+    <Feature Id="ProductFeature" Title="setup" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+    <Upgrade Id="{$(env.UPGRADECODE)}">
+      <UpgradeVersion Maximum="$(env.PRODUCTVERSION)" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
+    </Upgrade>
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+    </InstallExecuteSequence>
+  </Product>
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(env.PRODUCTPROGFILES)">
+        <Directory Id="COMPANYDIR" Name="rhubarb-geek-nz">
+          <Directory Id="INSTALLDIR" Name="echo" />
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+      <Component Id="cmp23478923489238479327498237492379" Guid="*" Directory="INSTALLDIR" Win64="$(env.PRODUCTWIN64)">
+        <File Id="fil3432848239472394F64BE9D5C35CFF80" KeyPath="yes" Source="bin\$(env.PRODUCTARCH)\echo.exe"/>
+        <ServiceInstall Id="echo" Name="echo" DisplayName="Echo Service" Description="Echo Service for UDP and TCP" Start="demand" Type="ownProcess" ErrorControl="normal" Account="LocalSystem" Vital="yes" Interactive="no" />
+        <ServiceControl Id="echo" Name="echo" Stop="both" Remove="uninstall" Wait="yes" />
+        <ServiceConfig ServiceName="echo" OnInstall="yes" DelayedAutoStart="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

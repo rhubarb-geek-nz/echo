@@ -35,4 +35,4 @@ Socket and service for systemd
 
 ## Service
 
-Win32 service
+Win32 service for TCP and UDP packaged in an MSI
